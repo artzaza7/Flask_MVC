@@ -5,26 +5,34 @@ app = Flask(__name__)
 
 
 # connection Database
-connection = pymysql.connect(host='localhost',
-                             user='root',
-                             password='',
-                             database='flaskdb_test',
-                             charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
+def openConnection():
+    connection = pymysql.connect(host='localhost',
+                                 user='root',
+                                 password='',
+                                 database='flaskdb_test',
+                                 charset='utf8',
+                                 cursorclass=pymysql.cursors.DictCursor)
+    return connection
 # localhost, username, password, database
 
 
 @app.route("/")
-def hello():
-    with connection:
-        cur = connection.cursor()
-        cur.execute("SELECT * FROM `user`")
-        rows=cur.fetchall()
-        return render_template('index.html', datas=rows)
+def index():
+    conn = openConnection()
+    cur = conn.cursor()
+    sql = "SELECT * FROM `user`"
+    cur.execute(sql)
+    result = cur.fetchall()
+    conn.close()
+    return render_template('index.html', datas=result)
 
-@app.route("/students")
-def studentRoute():
-    return "Hello Student!"
 
+
+@app.route("/users/create")
+def createUserForm():
+    return render_template('newUser.html')
+
+
+# connection.close()
 if __name__ == "__main__":
     app.run(debug=True)
