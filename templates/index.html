@@ -40,8 +40,8 @@
                     <td>{{row.user_fname}}</td>
                     <td>{{row.user_lname}}</td>
                     <td>
-                        <a href="#" class="btn btn-warning">Edit</a>
-                        <a href="#" class="btn btn-danger">Delete</a>
+                        <a href="/editForm/{{row.user_id}}" class="btn btn-warning">Edit</a>
+                        <a href="/delete/{{row.user_id}}" class="btn btn-danger" onclick="return confirm('ต้องลบหรือไม่')">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}

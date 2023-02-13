@@ -45,10 +45,46 @@ def createUser():
         sql = "Insert into `user` (`user_username`, `user_password`, `user_fname`, `user_lname`) values (%s, %s, %s, %s)"
         cur.execute(sql, (username, password, fname, lname))
         conn.commit()
+        conn.close()
         return redirect(url_for('index'))
     else:
         return render_template('newUser.html')
 
+
+@app.route("/delete/<id>", methods=['GET'])
+def delete(id):
+    conn = openConnection()
+    cur = conn.cursor()
+    sql = "DELETE FROM `user` WHERE user_id = %s"
+    cur.execute(sql, (id))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('index'))
+
+@app.route("/editForm/<id>", methods=['GET', 'POST'])
+def editForm(id):
+    conn = openConnection()
+    cur = conn.cursor()
+    sql = "SELECT * FROM `user` WHERE user_id = %s"
+    cur.execute(sql, (id))
+    result = cur.fetchall()
+    conn.close()
+    return render_template('editUser.html', data=result)
+    
+@app.route("/editForm", methods=['GET', 'POST'])
+def edit():
+    id = request.form['id']
+    username = request.form['username']
+    password = request.form['password']
+    fname = request.form['fname']
+    lname = request.form['lname']
+    conn = openConnection()
+    cur = conn.cursor()
+    sql = "Update `user` set `user_username`=%s, `user_password`=%s, `user_fname`=%s, `user_lname`=%s WHERE user_id = %s"
+    cur.execute(sql, (username, password, fname, lname, id))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('index'))
 
 # connection.close()
 if __name__ == "__main__":
