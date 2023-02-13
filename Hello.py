@@ -86,6 +86,19 @@ def edit():
     conn.close()
     return redirect(url_for('index'))
 
+
+# Product
+@app.route("/product")
+def displayProduct():
+    conn = openConnection()
+    cur = conn.cursor()
+    sql = "SELECT * FROM `product`"
+    cur.execute(sql)
+    result = cur.fetchall()
+    conn.close()
+    return render_template('product/index.html', datas=result)
+
+
 # connection.close()
 if __name__ == "__main__":
     app.run(debug=True)
