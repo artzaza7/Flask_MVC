@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,15 +12,37 @@
         crossorigin="anonymous"></script>
     <title>Insert New User</title>
 </head>
+
 <body>
     <p>
-        <h1 align="center">
-            Form Create User
-        </h1>
+    <h1 align="center">
+        Form Create User
+    </h1>
     </p>
 
     <div class="container">
-        <a href="/" class="btn btn-success">Back</a>
+        <h2>Record Data</h2>
+        <form action="{{url_for('createUser')}}" method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="text" name="password" id="" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="fname">First name</label>
+                <input type="text" name="fname" id="" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="lname">Last name</label>
+                <input type="text" name="lname" id="" class="form-control"/>
+            </div>
+            <a href="/" class="btn btn-success">Back</a>
+            <button type="submit" class="pull-right btn btn-primary">Create</button>
+        </form>
     </div>
 </body>
+
 </html>

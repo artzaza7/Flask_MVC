@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 import pymysql
 
 app = Flask(__name__)
@@ -28,9 +28,26 @@ def index():
 
 
 
-@app.route("/users/create")
+@app.route("/users/createForm")
 def createUserForm():
     return render_template('newUser.html')
+
+@app.route("/users/create", methods=['POST', 'GET'])
+def createUser():
+    if request.method=="POST":
+        username = request.form['username']
+        password = request.form['password']
+        fname = request.form['fname']
+        lname = request.form['lname']
+        # print(username + password + fname + lname)
+        conn = openConnection()
+        cur = conn.cursor()
+        sql = "Insert into `user` (`user_username`, `user_password`, `user_fname`, `user_lname`) values (%s, %s, %s, %s)"
+        cur.execute(sql, (username, password, fname, lname))
+        conn.commit()
+        return redirect(url_for('index'))
+    else:
+        return render_template('newUser.html')
 
 
 # connection.close()
