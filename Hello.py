@@ -16,8 +16,11 @@ connection = pymysql.connect(host='localhost',
 
 @app.route("/")
 def hello():
-    dataIs = 5
-    return render_template('index.html', data = dataIs)
+    with connection:
+        cur = connection.cursor()
+        cur.execute("SELECT * FROM `user`")
+        rows=cur.fetchall()
+        return render_template('index.html', datas=rows)
 
 @app.route("/students")
 def studentRoute():
