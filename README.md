@@ -7,6 +7,15 @@
 - [x] II. Product สามารถแสดงผลรูปได้
 
 ---
+การติดตั้งการทำงาน ใช้ Flask กับ PyMySQL
+
+**Flask**
+> pip install Flask
+
+**PyMySQL**
+
+> pip install PyMySQL
+---
 
 Show Picture
 
